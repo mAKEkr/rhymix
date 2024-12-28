@@ -177,6 +177,12 @@ class Ncenterlite extends ModuleObject
 			$oDB->addIndex('ncenterlite_notify', 'idx_member_srl_and_readed', array('member_srl', 'readed'));
 		}
 
+		// Composite index to speed up updateNotifyReadedBySrl
+		if(!$oDB->isIndexExists('ncenterlite_notify', 'idx_member_srl_and_srl'))
+		{
+			$oDB->addIndex('ncenterlite_notify', 'idx_member_srl_and_srl', array('member_srl', 'srl'));
+		}
+		
 		// #1903 #1906
 		foreach(['target_browser', 'target_summary'] as $column_name)
 		{
